@@ -13,6 +13,8 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class SortingTests {
+	static final boolean PRINT_LISTS = false;
+
 	static abstract class Factory {
 		abstract Sorter<Integer> createSorter();
 	}
@@ -28,7 +30,13 @@ public class SortingTests {
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		Object[][] data = new Object[][] { { "Insertion Sort", new Factory() {
+		Object[][] data = new Object[][] {
+
+		{ "Radix Sort", new Factory() {
+			Sorter<Integer> createSorter() {
+				return new RadixSort<Integer>();
+			}
+		} }, { "Insertion Sort", new Factory() {
 			Sorter<Integer> createSorter() {
 				return new InsertionSort<Integer>();
 			}
@@ -63,7 +71,6 @@ public class SortingTests {
 	public void testSort5() {
 		Integer[] testArray = generateTestArray(5, 100);
 		testSortingOn(testArray);
-
 	}
 
 	@Test
@@ -72,12 +79,19 @@ public class SortingTests {
 		testSortingOn(testArray);
 	}
 
+	@Test
+	public void testSortWithNegative() {
+		Integer[] testArray = generateTestArray(100, 1000, true);
+		testSortingOn(testArray);
+	}
+
 	private void testSortingOn(Integer[] testArray) {
 		sorter.sort(testArray);
+		if (PRINT_LISTS) {
+			System.out.println(algorithm);
+			printArray(testArray);
+		}
 		assertSorted(algorithm, testArray);
-		// System.out.println(algorithm);
-		// printArray(testArray);
-
 	}
 
 	static void printArray(Integer[] a) {
@@ -97,9 +111,16 @@ public class SortingTests {
 	}
 
 	private Integer[] generateTestArray(int n, int max) {
+		return generateTestArray(n, max, false);
+	}
+
+	private Integer[] generateTestArray(int n, int max, boolean includeNegative) {
 		Integer[] theArray = new Integer[n];
 		for (int i = 0; i < theArray.length; i++) {
-			theArray[i] = (int) (Math.random() * max);
+			if (includeNegative)
+				theArray[i] = (int) (Math.random() * max * 2) - max;
+			else
+				theArray[i] = (int) (Math.random() * max);
 		}
 		return theArray;
 	}
