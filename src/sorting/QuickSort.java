@@ -12,6 +12,11 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
 		qsort(a, 0, a.length-1);
 	}
 
+	/**
+	 * @param a - array to be sorted
+	 * @param begin  -> first element
+	 * @param end -> last element
+	 */
 	public void qsort(E[] a, int begin, int end) {
 		if (!(end > begin))
 			return;
