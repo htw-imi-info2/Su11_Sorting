@@ -9,18 +9,18 @@ import sorting.Sorter;
 public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
 	public static final Random RND = new Random();
 	public static boolean RANDOMPI = true;
-	int n;
+	int call_number;
 
 	@Override
 	public void sort(E[] a) {
-		n = 0;
+		call_number = 0;
 		qsort(a, 0, a.length - 1, 0);
 	}
 
 	public void qsort(E[] a, int begin, int end, int depth) {
-		int myn = ++n;
+		int my_call_number = ++call_number;
 		int pivotIndex = -1;
-		Util.log("quicksort start", myn, depth, a, begin, end);
+		Util.log("quicksort start", my_call_number, depth, a, begin, end);
 		if (!(end > begin)) {
 			return;
 		} else {
@@ -28,7 +28,7 @@ public class QuickSort<E extends Comparable<E>> implements Sorter<E> {
 			qsort(a, begin, pivotIndex - 1, depth + 1);
 			qsort(a, pivotIndex + 1, end, depth + 1);
 		}
-		Util.log("quicksort end  ", myn, depth, a, begin, end, pivotIndex);
+		Util.log("quicksort end  ", my_call_number, depth, a, begin, end, pivotIndex);
 	}
 
 	private int partition(E[] a, int begin, int end) {
