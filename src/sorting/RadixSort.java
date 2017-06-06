@@ -4,22 +4,22 @@ public class RadixSort<E extends Comparable<E>> implements Sorter<E> {
 	/**
 	 * Although this is too defined in a generic way, Radix Sort needs to "know"
 	 * something about the things it is sorting beyond the possibility to
-	 * compare two items. Thus, this only works for ints.
+	 * compare two items. Thus, this only works for Integer Arrays.
 	 */
-	@SuppressWarnings("unchecked")
+
 	@Override
+	@SuppressWarnings("unchecked")
 	public void sort(E[] a) {
 		/*
 		 * as radix
 		 */
 		int[] intArray = new int[a.length];
-		for (int i = 0; i < a.length; i++) {
-			intArray[i] = (int) a[i];
-		}
+
+		for (int i = 0; i < a.length; i++) intArray[i] = (Integer) a[i];
+
 		intArray = sort(intArray);
-		for (int i = 0; i < intArray.length; i++) {
-			a[i] = (E) Integer.valueOf(intArray[i]);
-		}
+
+		for (int i = 0; i < intArray.length; i++) a[i] = (E) Integer.valueOf(intArray[i]);
 
 	}
 	
